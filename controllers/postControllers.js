@@ -5,6 +5,9 @@ const Comment = require("../models/Comment");
 const PostLike = require("../models/PostLike");
 const paginate = require("../util/paginate");
 const cooldown = new Set();
+const Filter = require("bad-words")
+
+const filter = new Filter()
 
 USER_LIKES_PAGE_SIZE = 9;
 
@@ -22,10 +25,14 @@ const createPost = async (req, res) => {
       );
     }
 
+    if(filter.isProfane(content) || filter.isProfane(title)){
+      throw new Error("please use appropriate language while posting")
+    }
+
     cooldown.add(userId);
     setTimeout(() => {
       cooldown.delete(userId);
-    }, 60000);
+    }, 6000);
 
     const post = await Post.create({
       title,

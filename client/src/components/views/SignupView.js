@@ -20,12 +20,15 @@ const SignupView = () => {
   const navigate = useNavigate();
   const [serverError, setServerError] = useState("");
   const [errors, setErrors] = useState({});
+  const [isOpen, setIsOpen] = useState(false);
 
   const [formData, setFormData] = useState({
     username: "",
     email: "",
     password: "",
   });
+
+  const emailRegex = /^(202[1-9]\w{3}\d{3})@sggs\.ac\.in$/;
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -54,6 +57,10 @@ const SignupView = () => {
       errors.username = "Must be between 6 and 30 characters long";
     }
 
+    if (!emailRegex.test(formData.email)) {
+      errors.email = "the email should be a valid college email";
+    }
+
     if (contains(formData.username, " ")) {
       errors.username = "Must contain only valid characters";
     }
@@ -75,8 +82,8 @@ const SignupView = () => {
     <Container maxWidth={"xs"} sx={{ mt: { xs: 2, md: 6 } }}>
       <Stack alignItems="center">
         <Typography variant="h2" color="text.secondary" sx={{ mb: 6 }}>
-          <Link to="/" color="inherit" underline="none">
-            PostIt
+          <Link variant="h3" to="/" color="inherit" underline="none">
+            SGGS Connect
           </Link>
         </Typography>
         <Typography variant="h5" gutterBottom>
@@ -124,6 +131,10 @@ const SignupView = () => {
             helperText={errors.password}
           />
           <ErrorAlert error={serverError} />
+          <Button onClick={() => setIsOpen(true)}>Upload an Image</Button>
+          {isOpen ? (
+            <input type="file" id="myimage" name="image" required />
+          ) : null}
           <Button type="submit" fullWidth variant="contained" sx={{ my: 2 }}>
             Sign Up
           </Button>

@@ -35,6 +35,7 @@ const PostSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+
 PostSchema.pre("save", function (next) {
   if (this.title.length > 0) {
     this.title = filter.clean(this.title);

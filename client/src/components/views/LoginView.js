@@ -45,9 +45,9 @@ const LoginView = () => {
   return (
     <Container maxWidth={"xs"} sx={{ mt: 6 }}>
       <Stack alignItems="center">
-        <Typography variant="h2" color="text.secondary" sx={{ mb: 6 }}>
+        <Typography variant="h3" color="text.secondary" sx={{ mb: 6 }}>
           <Link to="/" color="inherit" underline="none">
-            PostIt
+            SGGS Connect
           </Link>
         </Typography>
         <Typography variant="h5" gutterBottom>

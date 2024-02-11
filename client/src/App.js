@@ -4,8 +4,10 @@ import "react-icons/bi";
 import "react-icons/md";
 import "react-icons/bs";
 import "react-router-dom";
+import "./index.css";
 import { CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
+import { RecoilRoot } from "recoil";
 
 import {
   BrowserRouter,
@@ -25,6 +27,7 @@ import ExploreView from "./components/views/ExploreView";
 import PrivateRoute from "./components/PrivateRoute";
 import SearchView from "./components/views/SearchView";
 import MessengerView from "./components/views/MessengerView";
+import AdminView from "./components/views/AdminView";
 import { initiateSocketConnection, socket } from "./helpers/socketHelper";
 import { useEffect } from "react";
 import { BASE_URL } from "./config";
@@ -34,35 +37,38 @@ function App() {
   initiateSocketConnection();
 
   return (
-    <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <CssBaseline />
-        <Routes>
-          <Route path="/" element={<ExploreView />} />
-          <Route path="/posts/:id" element={<PostView />} />
-          <Route
-            path="/posts/create"
-            element={
-              <PrivateRoute>
-                <CreatePostView />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/messenger"
-            element={
-              <PrivateRoute>
-                <MessengerView />
-              </PrivateRoute>
-            }
-          />
-          <Route path="/search" element={<SearchView />} />
-          <Route path="/users/:id" element={<ProfileView />} />
-          <Route path="/login" element={<LoginView />} />
-          <Route path="/signup" element={<SignupView />} />
-        </Routes>
-      </BrowserRouter>
-    </ThemeProvider>
+    <RecoilRoot>
+      <ThemeProvider theme={theme}>
+        <BrowserRouter>
+          <CssBaseline />
+          <Routes>
+            <Route path="/" element={<ExploreView />} />
+            <Route path="/posts/:id" element={<PostView />} />
+            <Route
+              path="/posts/create"
+              element={
+                <PrivateRoute>
+                  <CreatePostView />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/messenger"
+              element={
+                <PrivateRoute>
+                  <MessengerView />
+                </PrivateRoute>
+              }
+            />
+            <Route path="/search" element={<SearchView />} />
+            <Route path="/users/:id" element={<ProfileView />} />
+            <Route path="/login" element={<LoginView />} />
+            <Route path="/signup" element={<SignupView />} />
+            <Route path="/verify" element={<AdminView />} />
+          </Routes>
+        </BrowserRouter>
+      </ThemeProvider>
+    </RecoilRoot>
   );
 }
 

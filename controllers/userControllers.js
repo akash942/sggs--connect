@@ -25,6 +25,7 @@ const buildToken = (user) => {
 const register = async (req, res) => {
   try {
     const { username, email, password } = req.body;
+    console.log(req.body);
 
     if (!(username && email && password)) {
       throw new Error("All input required");
@@ -171,6 +172,23 @@ const getFollowing = async (req, res) => {
   }
 };
 
+const hide = async (req, res) => {
+  try {
+    console.log("hit");
+    console.log(req.headers);
+    let username = req.headers.username;
+    let status = req.headers.status
+    console.log(username);
+    const user = await User.findOne({ username: username });
+    console.log(user._id);
+    const response = await User.findByIdAndUpdate(user._id,{ isVerified: status });
+    console.log(response);
+    res.status(200).json({ msg: "ok" });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const getUser = async (req, res) => {
   try {
     const username = req.params.username;
@@ -205,6 +223,19 @@ const getUser = async (req, res) => {
     return res.status(400).json({ error: err.message });
   }
 };
+
+const getUnverifiedUsers = async (req, res) => {
+  try {
+    console.log("this was hit");
+    const users = await User.find({ isVerified: false });
+    console.log(users);
+    // return users;
+    res.status(200).json(users);
+  } catch (error) {
+    console.log(error);
+  }
+};
+// getUnverifiedUsers()
 
 const getRandomUsers = async (req, res) => {
   try {
@@ -253,4 +284,6 @@ module.exports = {
   getUser,
   getRandomUsers,
   updateUser,
+  getUnverifiedUsers,
+  hide,
 };

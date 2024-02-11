@@ -17,7 +17,11 @@ dotenv.config();
 const httpServer = require("http").createServer(app);
 const io = require("socket.io")(httpServer, {
   cors: {
-    origin: ["http://localhost:3000", "https://post-it-heroku.herokuapp.com"],
+    origin: [
+      "*",
+      "http://localhost:3000",
+      "https://post-it-heroku.herokuapp.com",
+    ],
   },
 });
 
@@ -37,7 +41,7 @@ httpServer.listen(process.env.PORT || 4000, () => {
 });
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({origin: "*"}));
 app.use("/api/posts", posts);
 app.use("/api/users", users);
 app.use("/api/comments", comments);

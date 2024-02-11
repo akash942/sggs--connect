@@ -27,6 +27,8 @@ import { MdCancel } from "react-icons/md";
 import { BiTrash } from "react-icons/bi";
 import { BsReplyFill } from "react-icons/bs";
 import UserLikePreview from "./UserLikePreview";
+import {useRecoilState} from "recoil"
+import { ananomousAtom } from "../atoms";
 
 const PostCard = (props) => {
   const { preview, removePost } = props;
@@ -43,6 +45,7 @@ const PostCard = (props) => {
   const [confirm, setConfirm] = useState(false);
   const [post, setPost] = useState(postData);
   const [likeCount, setLikeCount] = useState(post.likeCount);
+  const [userAnanamous, setUserAnanamous] = useRecoilState(ananomousAtom);
 
   let maxHeight = null;
   if (preview === "primary") {

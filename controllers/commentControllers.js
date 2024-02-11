@@ -3,6 +3,9 @@ const mongoose = require("mongoose");
 const Post = require("../models/Post");
 const paginate = require("../util/paginate");
 const cooldown = new Set();
+const Filter = require("bad-words")
+
+const filter = new Filter()
 
 const createComment = async (req, res) => {
   try {
@@ -19,6 +22,10 @@ const createComment = async (req, res) => {
       throw new Error(
         "You are commenting too frequently. Please try again shortly."
       );
+    }
+
+    if (filter.isProfane(content)) {
+      throw new Error("use appropriate language while posting")
     }
 
     cooldown.add(userId);
